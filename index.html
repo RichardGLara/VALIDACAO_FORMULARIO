@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js" defer></script>
+    <title>Validação de Formulário</title>
+</head>
+<body>
+    <div class="formbox">
+    <form action="">
+        <h2>Formulário de Cadastro</h2>
+        <label for="username">*Username: </label>
+        <input type="text" id="username" name="username">
+        <p id="username-helper" class="helper-text">Mensagem de ajuda</p>
+
+        <label for="email">*Email: </label>
+        <input type="email" name="email" id="email" >
+        <p id="email-helper" class="helper-text" >Mensagem de ajuda</p>
+
+        <label for="idade">Idade: </label>
+        <input type="number" name="idade" id="idade">
+        <p id="idade-helper" class="helper-text">Mensagem de ajuda</p>
+
+        <label for="senha">*Senha: </label>
+        <input type="password" name="senha" id="senha">
+        <p id="senha-helper" class="helper-text">Mensagem de ajuda</p>
+
+        <label for="confirma-senha">*Confirmar senha: </label>
+        <input type="password" name="confirma-senha" id="confirma-senha">
+        <p id="confirma-senha-helper" class="helper-text">Mensagem de ajuda</p>
+
+        <button type="submit">Enviar</button>
+    </form>
+    </div>
+</body>
+</html>
