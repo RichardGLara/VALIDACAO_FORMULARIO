@@ -1,5 +1,5 @@
 <img align="center" alt="CSS" height="60" width="180" src="https://essa.prozeducacao.com.br/img/logo-proz.png">
-Exercício de Validação de formulários
+Exercício de Validação de Formulários
 <div>
    ### :hammer_and_wrench: Languages and Tools:
 <br>
