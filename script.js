@@ -4,12 +4,7 @@ let usernameInput = document.getElementById("username");
 let usernameLabel = document.querySelector('label[for="username"]');
 let usernameHelper = document.getElementById("username-helper");
 
-//console.log(usernameInput);
-//console.log(usernameLabel);
-//console.log(usernameHelper);
-
-
-//função para o popup, apos 
+//Função para o popup, apos 
 function popupView(input, label) {
     input.addEventListener("focus", function() {
         label.classList.add("required-popup")
@@ -20,35 +15,37 @@ function popupView(input, label) {
     });
 }
 
+//Função de estilização de informação correta
+function estilizarInputCorreto(input, helper) {
+    input.classList.remove("error")
+    input.classList.add("correct")
+    helper.classList.remove("visible")
+}
+//Função de Estilização de informação incorreta
+function estilizarInputIncorreto(input, helper) {
+    input.classList.remove("correct")
+    input.classList.add("error")
+    helper.classList.add("visible")
+}
+
+
 //---chamando funções
 popupView(usernameInput, usernameLabel)
 
-//----------MOSTRAR POPUP DE CAMPO OBRIGATÓRIO - INPUT
-// usernameInput.addEventListener("focus", function() {
-//    usernameLabel.classList.add("required-popup")
-// });
-//----------OCULTAR POPUP DE CAMPO OBRIGATÓRIO - INPUT
-//usernameInput.addEventListener("blur", function() {
-//    usernameLabel.classList.remove("required-popup")
-//});
-
-
 //----------VALIDAR VALOR DO INPUT
-usernameInput.addEventListener("change", function(evento) {
+usernameInput.addEventListener("blur", function(evento) {
     let valor = evento.target.value
     if(valor.length < 3){
         //Input inválido
         console.log("O username precisa ter no minimo 3 caracteres")
-        usernameInput.classList.remove("correct")
-        usernameInput.classList.add("error")
+        estilizarInputIncorreto(usernameInput, usernameHelper)
         usernameHelper.innerText = "O username precisa ter no minimo 3 caracteres"
-        usernameHelper.classList.add("visible")
+        inputCorretos.username = false
     }else{
         //Input correto
         console.log("Input válido!")
-        usernameInput.classList.remove("error")
-        usernameInput.classList.add("correct")
-        usernameHelper.classList.remove("visible")
+        estilizarInputCorreto(usernameInput, usernameHelper)
+        inputCorretos.username = true
     }
 })
 
@@ -57,34 +54,95 @@ let emailInput = document.getElementById("email")
 let emailLabel = document.querySelector('label[for="email"]')
 let emailHelper = document.getElementById("email-helper")
 
-//console.log(emailInput)
-//console.log(emailLabel)
-//console.log(emailHelper)
-
-//----------MOSTRAR POPUP DE CAMPO OBRIGATÓRIO - EMAIL
-//emailInput.addEventListener("focus", function() {
-//    emailLabel.classList.add("required-popup")
-// });
-//----------OCULTAR POPUP DE CAMPO OBRIGATÓRIO - EMAIL
-//emailInput.addEventListener("blur", function() {
-//    emailLabel.classList.remove("required-popup")
-//});
 
 popupView(emailInput, emailLabel)
 
 //----------VALIDAR - EMAIL
-emailInput.addEventListener("change", function(evento) {
+emailInput.addEventListener("blur", function(evento) {
     let valor = evento.target.value
-    if(valor.includes("@") && valor.includes(".com")) {
+    if (valor == "") {
+        emailHelper.innerText = "O campo senha não pode estar vazio..."
+        estilizarInputIncorreto(emailInput, emailHelper)
+        inputCorretos.email = false
+    }else if (valor.includes("@") && valor.includes(".com")) {
         console.log("Email Válido")
-        emailInput.classList.remove("error")
-        emailInput.classList.add("correct")
-        emailHelper.classList.remove("visible")
+        estilizarInputCorreto(emailInput, emailHelper)
+        inputCorretos.email = true
     }else{
     console.log("Email Incorreto!")
-    emailInput.classList.remove("correct")
-    emailInput.classList.add("error")
+    estilizarInputIncorreto(emailInput, emailHelper)
     emailHelper.innerText = "Insira uim e-mail válido..."
-    emailHelper.classList.add("visible")
+    inputCorretos.email = false
+    }
+})
+
+//---------- Validar PASSWORD I
+let senhaInput = document.getElementById("senha");
+let senhaLabel = document.querySelector('label[for="senha"]');
+let senhaHelper = document.getElementById("senha-helper");
+
+popupView(senhaInput, senhaLabel)
+
+senhaInput.addEventListener("blur", (evento) => {
+    let valor = evento.target.value
+    if (valor == "") {
+        senhaHelper.innerText = "O campo senha não pode estar vazio..."
+        estilizarInputIncorreto(senhaInput, senhaHelper)
+        inputCorretos.senha = false
+    }else{
+        estilizarInputCorreto(senhaInput, senhaHelper)
+        inputCorretos.senha = true
+    }
+})
+
+
+//----------Validar PASSWORD II
+let confirmaSenhaInput = document.getElementById("confirma-senha");
+let confirmaSenhaLabel = document.querySelector('label[for="confirma-senha"]');
+let confirmaSenhaHelper = document.getElementById("confirma-senha-helper");
+
+popupView(confirmaSenhaInput, confirmaSenhaLabel)
+
+confirmaSenhaInput.addEventListener("blur", (evento) => {
+    let valor = evento.target.value
+    //console.log(valor, senhaInput.value)
+    if (valor == "") {
+        confirmaSenhaHelper.innerText = "O campo senha não pode estar vazio..."
+        estilizarInputIncorreto(confirmaSenhaInput, confirmaSenhaHelper)
+        inputCorretos.confirmasenha = false
+    }else if (valor == senhaInput.value) {
+        estilizarInputCorreto(confirmaSenhaInput, confirmaSenhaHelper)
+        inputCorretos.confirmasenha = true
+    }else{
+        confirmaSenhaHelper.innerText = "As senhas não estão iguais..."
+        estilizarInputIncorreto(confirmaSenhaInput, confirmaSenhaHelper)
+        inputCorretos.confirmasenha = false
+    }
+})
+
+
+//-----------Evitar o envio do formulário
+let btnSubmit = document.querySelector('button[type="submit')
+console.log (btnSubmit);
+
+let inputCorretos = {
+    username: false,
+    email: false,
+    senha: false,
+    confirmasenha: false
+}
+
+console.log(inputCorretos)
+
+btnSubmit.addEventListener("click", (evento)=> {
+    console.log(inputCorretos)
+    if(inputCorretos.username == false ||
+        inputCorretos.email == false ||
+        inputCorretos.senha == false ||
+        inputCorretos.confirmasenha == false){
+        evento.preventDefault()
+        alert("Preencha os campos obrigatórios corretamente...")
+    }else{
+        alert("Formulario enviado com sucesso!")
     }
 })
